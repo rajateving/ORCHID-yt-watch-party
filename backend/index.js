@@ -15,7 +15,7 @@ app.use(cors())
 // setup sockets
 const io = socket(server,{
       cors: {
-        origin: "http://localhost:3000",
+        origin: "https://https-orchid-uditi-das-onrender-com.onrender.com",
         methods: ["GET", "POST"],
       },
     });
