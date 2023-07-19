@@ -7,6 +7,11 @@ import { FaBell } from "react-icons/fa";
 import { CgClose } from "react-icons/cg";
 import { Context } from "../context/contextApi";
 import Carousel from "./Carousel";
+// import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser } from '../Reducers/authReducer';
+import { signOut } from 'firebase/auth';
+import { auth } from '../firebase';
 
 import Loader from "./Loader";
 
@@ -30,7 +35,15 @@ const Header = () => {
     };
     const { pathname } = useLocation();
     const pageName = pathname?.split("/")?.filter(Boolean)?.[0];
- 
+    // const navigate=useNavigate()
+  const user=useSelector((state)=>state.auth.user);
+  const dispatch=useDispatch();
+  const handleLogout=()=>{
+    dispatch(loginUser());
+    signOut(auth);
+    navigate('/')
+  
+  }
     return (
         <div className="sticky p-4 gap-4 top-0 z-10 flex flex-row flex-wrap glass-effect items-center justify-between min-h-20 md:px-5 glass-effect  ">
                {loading && <Loader />}
@@ -62,8 +75,10 @@ const Header = () => {
             
             <div className="flex items-center gap-4 font-medium text-white">
                 <FaBell className="mt-1 cursor-pointer"/>
-                <h2 className="text-sm">WELCOME USER</h2>
+                <h2 className="text-sm">WELCOME,{user==null?"":user.username}</h2>
+                <button onClick={handleLogout}>logout</button>
             </div>
+        
         </div>
     );
 }

@@ -5,7 +5,7 @@ import React,{useEffect,useRef,useState } from "react";
 import {db} from '../firebase';
 import io from 'socket.io-client';
 import {addDoc,collection,onSnapshot,serverTimestamp,where,query,orderBy} from "firebase/firestore"
-
+import { useSelector} from 'react-redux';
 let socket  =  io.connect('https://orchid-uditi-das-backend.onrender.com');
 // let socket  =  io.connect('http://localhost:4000');
 const WatchPartyRoom = () => {
@@ -96,7 +96,7 @@ console.log("socket: paused video")
 console.log("MAIN THING: ",played)
 
 //END OF SOCKET INTEGRATION
-
+const user = useSelector((state) => state.auth);
     return (
         <div className="flex justify-center flex-row h-[calc(100%-56px)] bg-black">
             <div className="w-full max-w-[1280px]  flex flex-wrap flex-col lg:flex-row">
@@ -190,7 +190,7 @@ console.log("MAIN THING: ",played)
                 <Link to="/"><div className='px-4 py-2 hover:bg-red-700 text-xs cursor-pointer bg-red-600 text-white'>Leave</div></Link>
                 </div>
                 {messages.map((message)=><div className='flex flex-col gap-2 justify-center' key={message.id}>
-                    <div className="text-white">{message.text}</div>
+                    <div className="text-white">{user==null?"":user.username} : {message.text}</div>
                  </div>)}
                 
                 <div className='flex'>
