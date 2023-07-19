@@ -13,6 +13,7 @@ function App() {
   return (<>
   
     <BrowserRouter>
+    
     <div className="flex flex-col h-full bg-black">
     <Routes>
       <Route path="/" exact element={<> <AppContext><Header/><Feed/></AppContext></>}/>
