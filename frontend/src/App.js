@@ -13,14 +13,14 @@ function App() {
   return (<>
   
     <BrowserRouter>
-    
+
     <div className="flex flex-col h-full bg-black">
     <Routes>
-      <Route path="/" exact element={<> <AppContext><Header/><Feed/></AppContext></>}/>
+      <Route path="/landing" exact element={<> <AppContext><Header/><Feed/></AppContext></>}/>
       <Route path="/searchResult/:searchQuery" element={<><AppContext><Header/><SearchResult/></AppContext></>}/>
       <Route path="/video/:id" element={<><AppContext><Header/><VideoDetails/></AppContext></>}/>
       <Route path="/watchparty/:id" element={<><AppContext><Header/><WatchPartyRoom/></AppContext></>}/>
-      {/* <Route path="/" element={<Landing/>}/> */}
+      <Route path="/" element={<Landing/>}/>
     </Routes>
     
     </div>
