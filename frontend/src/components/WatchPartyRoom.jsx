@@ -6,7 +6,7 @@ import {db} from '../firebase';
 import io from 'socket.io-client';
 import {addDoc,collection,onSnapshot,serverTimestamp,where,query,orderBy} from "firebase/firestore"
 
-// let socket  =  io.connect('http://localhost:4000');
+let socket  =  io.connect('https://orchid-uditi-das-backend.onrender.com');
 // let socket  =  io.connect('http://localhost:4000');
 const WatchPartyRoom = () => {
     const { id } = useParams();
@@ -59,40 +59,41 @@ const WatchPartyRoom = () => {
 
 
 
+
 // START OF SOCKET INTEGRATION
 
-// const player1= useRef();
-// const [played, setPlayed] = useState(0);
-// const [playing, setPlaying] = useState(false);
-// const [seeking, setSeeking] = useState(false);
+const player1= useRef();
+const [played, setPlayed] = useState(0);
+const [playing, setPlaying] = useState(false);
+const [seeking, setSeeking] = useState(false);
 
 
 
-// socket.on('update',(data)=>{
-// console.log('Recieved data',data)
-// // player.seekTo(data,true);
+socket.on('update',(data)=>{
+console.log('Recieved data',data)
+// player.seekTo(data,true);
  
 
-//   setSeeking(false);
-//   player1?.current?.seekTo(parseFloat(data));
-//   setPlayed(parseFloat(data));
-// })
+  setSeeking(false);
+  player1?.current?.seekTo(parseFloat(data));
+  setPlayed(parseFloat(data));
+})
 
-// socket.on('play',()=>{
-// // player.playVideo();
+socket.on('play',()=>{
+// player.playVideo();
 
-// console.log("socket: played f video")
-//   // setCon({playing:true})
-//   setPlaying(true)
-// })
+console.log("socket: played f video")
+  // setCon({playing:true})
+  setPlaying(true)
+})
 
-// socket.on('pause',()=>{
-// // player.pauseVideo();
-// console.log("socket: paused video")
-//   // setCon({playing:false})
-//   setPlaying(false)
-// })
-// console.log("MAIN THING: ",played)
+socket.on('pause',()=>{
+// player.pauseVideo();
+console.log("socket: paused video")
+  // setCon({playing:false})
+  setPlaying(false)
+})
+console.log("MAIN THING: ",played)
 
 //END OF SOCKET INTEGRATION
 
@@ -102,35 +103,35 @@ const WatchPartyRoom = () => {
                 <div className="flex flex-col lg:w-[calc(100%-350px)] xl:w-[calc(100%-400px)] px-4 py-3 lg:py-6 overflow-y-auto">
                     <div className="h-[200px] md:h-[400px] lg:h-[400px] xl:h-[550px] ml-[-16px] lg:ml-0 mr-[-16px] lg:mr-0">
                     <ReactPlayer 
-    // ref={player1}
+    ref={player1}
     url={`https://www.youtube.com/watch?v=${id}`}
     controls
     width="100%"
     height="100%"
     style={{ backgroundColor: "#000000" }}
     
-    // playing={playing}
+    playing={playing}
     // played={played}
-    // onProgress={(newState) => {
-    //   if (!seeking) {
-    //     setPlayed(newState.played);
-    //     socket.emit('update',newState.played);
-    //   }
-    //   // player1.current.seekTo(parseFloat(newState.played));
+    onProgress={(newState) => {
+      if (!seeking) {
+        setPlayed(newState.played);
+        socket.emit('update',newState.played);
+      }
+      // player1.current.seekTo(parseFloat(newState.played));
      
-    //   console.log("PROGRESS")
-    // }}
-    // onPlay={() => {
-    //   setPlaying(true);
-    //   socket.emit('play')
-    // }}
-    // onPause={() => {
-    //   setPlaying(false);
-    //   socket.emit('pause')
-    // }}
+      console.log("PROGRESS")
+    }}
+    onPlay={() => {
+      setPlaying(true);
+      socket.emit('play')
+    }}
+    onPause={() => {
+      setPlaying(false);
+      socket.emit('pause')
+    }}
   
     />
-    {/* <input
+    <input
         style={{ width: "100%",display:"hidden" }}
         type="range"
         min={0}
@@ -149,8 +150,8 @@ const WatchPartyRoom = () => {
           player1.current.seekTo(parseFloat(value));
           // player2Ref.current.seekTo(parseFloat(value));
         }}
-      /> */}
-      {/* <button
+      />
+      <button
       className='px-4 py-2 hover:bg-cyan-700 text-xs cursor-pointer bg-cyan-600 text-white'
         onClick={() => {
           setPlaying(false);
@@ -159,7 +160,7 @@ const WatchPartyRoom = () => {
         }}
       >
         Reset
-      </button> */}
+      </button>
                     {/* <ReactPlayer 
                       url={`https://www.youtube.com/watch?v=${id}`}
                       controls
@@ -184,7 +185,7 @@ const WatchPartyRoom = () => {
                 <div className='flex flex-col justify-between h-[85vh] '>
                 <div className='flex justify-between'>
                 <div className="text-white">Invite Link:
-                    <input className='py-2 px-4 bg-black' value={`localhost:3000/watchparty/${id}`}/>
+                    <input className='py-2 px-4 bg-black' value={`localhost:3000/watchparty/${id}`} readOnly/>
                 </div>
                 <Link to="/"><div className='px-4 py-2 hover:bg-red-700 text-xs cursor-pointer bg-red-600 text-white'>Leave</div></Link>
                 </div>
