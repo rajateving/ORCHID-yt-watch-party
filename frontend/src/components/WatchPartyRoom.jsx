@@ -6,7 +6,7 @@ import {db} from '../firebase';
 import io from 'socket.io-client';
 import {addDoc,collection,onSnapshot,serverTimestamp,where,query,orderBy} from "firebase/firestore"
 
-let socket  =  io.connect('http://localhost:4000');
+let socket  =  io.connect('https://orchid-uditi-das-backend.onrender.com');
 // let socket  =  io.connect('http://localhost:4000');
 const WatchPartyRoom = () => {
     const { id } = useParams();
