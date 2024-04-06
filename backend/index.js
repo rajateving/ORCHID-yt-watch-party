@@ -2,7 +2,7 @@ const express = require('express');
 const socket = require('socket.io');
 const cors=require('cors')
 const app = express();
-
+///ek number app hai mast app hai 
 // app.use(express.static('public'));
 
 //Run the server
